@@ -48,11 +48,11 @@
     </group>
 
     <group ns="car">
-    	<arg name="vehicle" default="marker"/>
+    	<arg name="vehicle" default="marker_car"/>
         <arg name="ID" value="2"/>
 	<arg name="x" value="0"/>
-	<arg name="y" value="1"/>
-	<arg name="z" value="0.2"/>
+	<arg name="y" value="0"/>
+	<arg name="z" value="0"/>
 	<arg name="R" value="0"/>
 	<arg name="P" value="0"/>
 	<arg name="Y" value="0"/>
@@ -61,6 +61,7 @@
 	<!-- spawn vehicle -->
     	<node name="$(arg vehicle)_$(arg ID)_spawn" output="screen" pkg="gazebo_ros" type="spawn_model" args="-sdf -param model_description -model $(arg vehicle)_$(arg ID) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
     </group>
+
 
 
 </launch>
