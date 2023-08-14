@@ -3,7 +3,7 @@
     <!-- MAVROS posix SITL environment launch script -->
     <!-- launches Gazebo environment and 2x: MAVROS, PX4 SITL, and spawns vehicle -->
     <!-- vehicle model and world -->
-    <arg name="est" default="ekf2"/>
+    <arg name="vehicle" default="iris_feima"/>
 
     <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/>
     <!-- gazebo configs -->
@@ -20,22 +20,23 @@
         <arg name="paused" value="$(arg paused)"/>
     </include>
 
-    <group ns="UAV1">
-	       <!-- MAVROS and vehicle configs -->
-	<arg name="vehicle" default="iris"/>
-        <arg name="ID" value="1"/>
-        <arg name="fcu_url" default="udp://:14541@localhost:14581"/>
+       <!-- UAV0 -->
+    <group ns="uav0">
+        <arg name="est" default="ekf2"/>
+        <!-- MAVROS and vehicle configs -->
+        <arg name="ID" value="0"/>
+        <arg name="fcu_url" default="udp://:14540@localhost:14580"/>
         <!-- PX4 SITL and vehicle spawn -->
         <include file="$(find px4)/launch/single_vehicle_spawn_sdf.launch">
-            <arg name="x" value="1"/>
-            <arg name="y" value="1"/>
+            <arg name="x" value="0"/>
+            <arg name="y" value="0"/>
             <arg name="z" value="0"/>
             <arg name="R" value="0"/>
             <arg name="P" value="0"/>
             <arg name="Y" value="0"/>
             <arg name="vehicle" value="$(arg vehicle)"/>
-            <arg name="mavlink_udp_port" value="14561"/>
-            <arg name="mavlink_tcp_port" value="4561"/>
+            <arg name="mavlink_udp_port" value="14560"/>
+            <arg name="mavlink_tcp_port" value="4560"/>
             <arg name="ID" value="$(arg ID)"/>
         </include>
         <!-- MAVROS -->
@@ -48,20 +49,17 @@
     </group>
 
     <group ns="car">
-    	<arg name="vehicle" default="marker_car"/>
         <arg name="ID" value="2"/>
-	<arg name="x" value="0"/>
-	<arg name="y" value="0"/>
-	<arg name="z" value="0"/>
-	<arg name="R" value="0"/>
-	<arg name="P" value="0"/>
-	<arg name="Y" value="0"/>
-	<arg name="cmd" default="xmlstarlet ed $(find px4)/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models/$(arg vehicle)/$(arg vehicle).sdf"/>
-    	<param command="$(arg cmd)" name="model_description"/>
-	<!-- spawn vehicle -->
-    	<node name="$(arg vehicle)_$(arg ID)_spawn" output="screen" pkg="gazebo_ros" type="spawn_model" args="-sdf -param model_description -model $(arg vehicle)_$(arg ID) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
+        <arg name="x" value="2"/>
+        <arg name="y" value="2"/>
+        <arg name="z" value="0"/>
+        <arg name="R" value="0"/>
+        <arg name="P" value="0"/>
+        <arg name="Y" value="0"/>
+        <arg name="cmd" default="xmlstarlet ed $(find mavlink_sitl_gazebo)/models/marker_car/marker_car.sdf"/>
+            <param command="$(arg cmd)" name="model_description"/>
+            <node name="marker_car_$(arg ID)_spawn" pkg="gazebo_ros" type="spawn_model" args="-sdf -param model_description -model marker_car_$(arg ID) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
     </group>
-
 
 
 </launch>
