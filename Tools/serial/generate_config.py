@@ -42,11 +42,11 @@ serial_ports = {
 #         "index": 1,
 #         "default_baudrate": 57600,
 #         },
-#     "URT2": {
-#         "label": "UART 2",
-#         "index": 2,
-#         "default_baudrate": 57600,
-#         },
+    # "URT2": {
+    #     "label": "UART 2",
+    #     "index": 2,
+    #     "default_baudrate": 57600,
+    #     },
 #     "URT3": {
 #         "label": "UART 3",
 #         "index": 3,
